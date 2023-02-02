@@ -542,8 +542,6 @@ func (fc *firecracker) fcSetBootSource(ctx context.Context, path, params string)
 }
 
 func (fc *firecracker) fcGetDiskRateLimiter() *models.RateLimiter {
-	fc.Logger().WithFields(logrus.Fields{"Bw": fc.config.DiskRateLimiterBwMaxRate,
-		"Ops": fc.config.DiskRateLimiterOpsMaxRate}).Warn("rateLimiter: here we are")
 	refillTime := int64(utils.DefaultRateLimiterRefillTimeMilliSecs)
 	var bwBucket *models.TokenBucket
 	if fc.config.DiskRateLimiterBwMaxRate > 0 {
@@ -568,7 +566,6 @@ func (fc *firecracker) fcGetDiskRateLimiter() *models.RateLimiter {
 
 	var rateLimiter *models.RateLimiter
 	if bwBucket != nil || opsBucket != nil {
-		fc.Logger().Warn("rateLimiter: here we are")
 		rateLimiter = &models.RateLimiter{
 			Bandwidth: bwBucket,
 			Ops:       opsBucket,
